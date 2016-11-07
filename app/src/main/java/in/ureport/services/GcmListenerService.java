@@ -35,6 +35,8 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
     private static final String EXTRA_CONTRIBUTION = "contribution";
     private static final String EXTRA_STORY = "story";
 
+    private static final String EXTRA_NOTIFICATION_KEY = "key";
+
     public enum Type {
         Rapidpro,
         Chat,
@@ -54,6 +56,10 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
         }
     }
 
+    private boolean hasType(Bundle data, Type type) {
+        return data != null && data.containsKey(EXTRA_NOTIFICATION_TYPE) && data.getString(EXTRA_NOTIFICATION_TYPE).equals(type.toString());
+    }
+
     private void sendChatMessageNotification(Bundle data) {
         try {
             ChatRoom chatRoom = getObject(data, EXTRA_CHAT_ROOM, IndividualChatRoom.class);
@@ -68,21 +74,18 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
         }
     }
 
-    private boolean hasType(Bundle data, Type type) {
-        return data != null && data.containsKey(EXTRA_NOTIFICATION_TYPE) && data.getString(EXTRA_NOTIFICATION_TYPE).equals(type.toString());
-    }
-
     private void sendContributionNotification(Bundle data) {
         try {
             Contribution contribution = getObject(data, EXTRA_CONTRIBUTION, Contribution.class);
-            Story story = getObject(data, EXTRA_STORY, Story.class);
+            Story story = new Story();
+            story.setKey(data.getString(EXTRA_NOTIFICATION_KEY));
 
             if(isUserAllowedForMessageNotification(contribution.getAuthor())) {
                 ContributionNotificationTask contributionNotificationTask = new ContributionNotificationTask(this, story);
                 contributionNotificationTask.execute(contribution);
             }
         } catch(Exception exception) {
-            Log.e(TAG, "sendChatMessageNotification ", exception);
+            Log.e(TAG, "sendContributionNotification ", exception);
         }
     }
 

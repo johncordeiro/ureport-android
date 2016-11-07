@@ -73,7 +73,6 @@ public class MainActivity extends BaseActivity implements OnSeeOpenGroupsListene
     private StoriesListFragment storiesListFragment;
     private ChatsFragment chatsFragment;
 
-    private LocalNotificationManager localNotificationManager;
     private Story story;
 
     private int roomMembersLoaded = 0;
@@ -83,7 +82,6 @@ public class MainActivity extends BaseActivity implements OnSeeOpenGroupsListene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setupObjects();
         checkTutorialView();
         checkForcedLogin();
         setContentView(R.layout.activity_main);
@@ -94,17 +92,11 @@ public class MainActivity extends BaseActivity implements OnSeeOpenGroupsListene
     @Override
     protected void onResume() {
         super.onResume();
-        localNotificationManager.cancelContributionNotification();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        localNotificationManager.cancelContributionNotification();
-    }
-
-    private void setupObjects() {
-        localNotificationManager = new LocalNotificationManager(this);
     }
 
     private void checkTutorialView() {
