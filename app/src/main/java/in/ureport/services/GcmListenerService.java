@@ -11,6 +11,7 @@ import in.ureport.managers.UserManager;
 import in.ureport.models.ChatMessage;
 import in.ureport.models.ChatRoom;
 import in.ureport.models.Contribution;
+import in.ureport.models.IndividualChatRoom;
 import in.ureport.models.Story;
 import in.ureport.models.User;
 import in.ureport.network.GcmServices;
@@ -53,6 +54,20 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
         }
     }
 
+    private void sendChatMessageNotification(Bundle data) {
+        try {
+            ChatRoom chatRoom = getObject(data, EXTRA_CHAT_ROOM, IndividualChatRoom.class);
+            ChatMessage chatMessage = getObject(data, EXTRA_CHAT_MESSAGE, ChatMessage.class);
+
+            if(isUserAllowedForMessageNotification(chatMessage.getUser())) {
+                ChatNotificationTask chatNotificationTask = new ChatNotificationTask(this, chatRoom);
+                chatNotificationTask.execute(chatMessage);
+            }
+        } catch(Exception exception) {
+            Log.e(TAG, "sendChatMessageNotification ", exception);
+        }
+    }
+
     private boolean hasType(Bundle data, Type type) {
         return data != null && data.containsKey(EXTRA_NOTIFICATION_TYPE) && data.getString(EXTRA_NOTIFICATION_TYPE).equals(type.toString());
     }
@@ -91,20 +106,6 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
         if(FlowManager.canShowNextNotification()) {
             MessageNotificationTask messageNotificationTask = new MessageNotificationTask(this);
             messageNotificationTask.execute(message);
-        }
-    }
-
-    private void sendChatMessageNotification(Bundle data) {
-        try {
-            ChatRoom chatRoom = getObject(data, EXTRA_CHAT_ROOM, ChatRoom.class);
-            ChatMessage chatMessage = getObject(data, EXTRA_CHAT_MESSAGE, ChatMessage.class);
-
-            if(isUserAllowedForMessageNotification(chatMessage.getUser())) {
-                ChatNotificationTask chatNotificationTask = new ChatNotificationTask(this, chatRoom);
-                chatNotificationTask.execute(chatMessage);
-            }
-        } catch(Exception exception) {
-            Log.e(TAG, "sendChatMessageNotification ", exception);
         }
     }
 

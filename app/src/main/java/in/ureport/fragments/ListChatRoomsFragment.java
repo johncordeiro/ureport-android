@@ -88,7 +88,6 @@ public class ListChatRoomsFragment extends Fragment implements SearchView.OnQuer
         setupObjects();
         setupView(view);
         loadData();
-        cancelChatNotifications();
     }
 
     @Override
@@ -130,11 +129,6 @@ public class ListChatRoomsFragment extends Fragment implements SearchView.OnQuer
     private void startInviteContacts() {
         Intent inviteContactsIntent = new Intent(getActivity(), InviteContactsActivity.class);
         startActivity(inviteContactsIntent);
-    }
-
-    private void cancelChatNotifications() {
-        LocalNotificationManager notifcationManager = new LocalNotificationManager(getActivity());
-        notifcationManager.cancelChatNotification();
     }
 
     @Override

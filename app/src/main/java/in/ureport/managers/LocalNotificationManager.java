@@ -51,6 +51,39 @@ public class LocalNotificationManager {
         }
     }
 
+    public void cancelChatNotification() {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.cancel(Type.Chat.id);
+    }
+
+    public void sendChatListNotification(List<ChatNotification> chatNotificationList) {
+        Type type = LocalNotificationManager.Type.Chat;
+        ChatNotification lastNotification = chatNotificationList.get(0);
+
+        String summaryText = context.getResources().getQuantityString(R.plurals.title_new_message, chatNotificationList.size());
+        summaryText = String.format(summaryText, chatNotificationList.size());
+
+        String notificationLine = String.format(MESSAGE_FORMAT, lastNotification.getNickname()
+                , lastNotification.getMessage());
+
+        NotificationCompat.Builder notificationBuilder = getDefaultNotificationBuilder(summaryText, notificationLine, getChatPendingIntent());
+
+        NotificationCompat.InboxStyle notificationInboxStyle = buildInboxStyle(chatNotificationList, summaryText);
+        notificationBuilder.setStyle(notificationInboxStyle)
+                .setGroup(type.group)
+                .setGroupSummary(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.notify(type.id, notificationBuilder.build());
+    }
+
+    private PendingIntent getChatPendingIntent() {
+        Intent chatIntent = new Intent(context, MainActivity.class);
+        chatIntent.setAction(MainActivity.ACTION_OPEN_CHAT_NOTIFICATION);
+        chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return PendingIntent.getActivity(context, MainActivity.REQUEST_CODE_CHAT_NOTIFICATION, chatIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+    }
+
     public void cancelContributionNotification() {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.cancel(Type.Contribution.id);
@@ -102,32 +135,6 @@ public class LocalNotificationManager {
         return PendingIntent.getActivity(context, MainActivity.REQUEST_CODE_MESSAGE_NOTIFICATION, intent, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
-    public void cancelChatNotification() {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.cancel(Type.Chat.id);
-    }
-
-    public void sendChatListNotification(List<ChatNotification> chatNotificationList) {
-        Type type = LocalNotificationManager.Type.Chat;
-        ChatNotification lastNotification = chatNotificationList.get(0);
-
-        String summaryText = context.getResources().getQuantityString(R.plurals.title_new_message, chatNotificationList.size());
-        summaryText = String.format(summaryText, chatNotificationList.size());
-
-        String notificationLine = String.format(MESSAGE_FORMAT, lastNotification.getNickname()
-                , lastNotification.getMessage());
-
-        NotificationCompat.Builder notificationBuilder = getDefaultNotificationBuilder(summaryText, notificationLine, getChatPendingIntent());
-
-        NotificationCompat.InboxStyle notificationInboxStyle = buildInboxStyle(chatNotificationList, summaryText);
-        notificationBuilder.setStyle(notificationInboxStyle)
-            .setGroup(type.group)
-            .setGroupSummary(true);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(type.id, notificationBuilder.build());
-    }
-
     private NotificationCompat.Builder getDefaultNotificationBuilder(String title, String message, PendingIntent pendingIntent) {
         Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_notification);
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -139,14 +146,8 @@ public class LocalNotificationManager {
                 .setLargeIcon(largeIcon)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
                 .setSound(soundUri);
-    }
-
-    private PendingIntent getChatPendingIntent() {
-        Intent chatIntent = new Intent(context, MainActivity.class);
-        chatIntent.setAction(MainActivity.ACTION_OPEN_CHAT_NOTIFICATION);
-        chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        return PendingIntent.getActivity(context, MainActivity.REQUEST_CODE_CHAT_NOTIFICATION, chatIntent, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     private NotificationCompat.InboxStyle buildInboxStyle(List<ChatNotification> chatNotificationList
