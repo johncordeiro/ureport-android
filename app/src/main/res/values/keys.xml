@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="facebook_app_id" translatable="false">1021658627874726</string>
+
+    <string name="parse_application_key">UG8mMG9zYPhRT0tQqgaShaGw0GxsnGusMwrxBEvg</string>
+    <string name="parse_client_key">bZRHi6Rm8360qMEOz3TeM8uugmwq98PhYyjQgdxq</string>
+
+    <string name="twitter_key" translatable="false">SKYXxzv0LeBdETT19fn2X3PkN</string>
+    <string name="twitter_secret" translatable="false">QKCoixE3KhAXTOAI19N1SXRCKzPp2iAwqVvtbAYQbwzupmkGUp</string>
+
+    <string name="rapidpro_host_address1" translatable="false">https://api.rapidpro.io/api/v1</string>
+    <string name="rapidpro_host_address2" translatable="false">https://rapidpro.ilhasoft.mobi/api/v1</string>
+
+    <string name="ureport_host_address1" translatable="false">http://ureport.in/api/v1</string>
+    <string name="ureport_host_address2" translatable="false">http://brasil.ureport.in/api/v1</string>
+
+    <string name="firebase_app" translatable="false">https://u-report-dev.firebaseio.com</string>
+    <string name="firebase_app_name" translatable="false">u-report-dev</string>
+
+    <string name="firebase_proxy_database" translatable="false">http://ureport-socket.ilhasoft.mobi:5000</string>
+    <string name="firebase_proxy_auth" translatable="false">https://ureport-proxy.ilhasoft.mobi</string>
+
+    <string name="identity_pool_id" translatable="false">us-east-1:938eb41c-68e0-4196-b542-988fdf02e10e</string>
+    <string name="amazon_s3_bucket_id" translatable="false">ureport-app</string>
+    <string name="amazon_s3_access_key">AKIAIA3EAI4WUQSZ24KQ</string>
+    <string name="amazon_s3_access_secret">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</string>
+
+    <string name="gcm_sender_id" translatable="false">843441539089</string>
+    <string name="gcm_api_key" translatable="false">AIzaSyAUwf0ZOqn9BXA6lhupxKmTcEpv_tYdoVs</string>
+
+    <string name="youtube_api_key" translatable="false">AIzaSyCqZooLOLKqUN3V2Odp3LbhXeSLor0sXIg</string>
+
+    <string name="proxy_url" translatable="false">http://ureportapp.ilhasoft.mobi/api/v2</string>
+    <string name="proxy_api_key" translatable="false">65395e80-b6db-4778-b10f-6ffb246744d4</string>
+
+    <string name="global_channel" translatable="false">19bd0f01-bae6-40f8-aa00-639beb00b141</string>
+    <string name="myanmar_channel" translatable="false">a21d4bda-44b9-433b-ac4d-77ba53afa2d2</string>
+    <string name="nigeria_channel" translatable="false">9bc1d3e8-58f1-4007-85ef-5051ce51d8ed</string>
+    <string name="chile_channel" translatable="false">5603ae08-2072-4cd0-bd2e-387890aa586d</string>
+    <string name="indonesia_channel" translatable="false">653adfb1-622a-4eae-8798-c648d8f21b1e</string>
+    <string name="brasil_channel" translatable="false">ad4f94c2-07ed-492a-b1d3-cbc57b8ddb7e</string>
+    <string name="ireland_channel" translatable="false">dfce72d3-b982-44a3-ba3a-e3b3fd68b989</string>
+    <string name="unitedkingdom_channel" translatable="false">360062b9-c2e7-472b-a940-a4bf8da3b284</string>
+    <string name="mexico_channel" translatable="false">-1</string>
+    <string name="uganda_channel" translatable="false">-1</string>
+    <string name="ukraine_channel" translatable="false">-1</string>
+    <string name="malaysia_channel" translatable="false">9c19a43f-4790-4c1b-893d-39dd600b94b8</string>
+    <string name="fiji_channel" translatable="false">83498b0c-167e-43b0-895e-f8b971e4c5b5</string>
+    <string name="syria_channel" translatable="false">fca52095-3c56-4141-ac68-055f483542f4</string>
+    <string name="guatemala_channel" translatable="false">001feb03-9010-44ba-bebc-9652a62a90f3</string>
+    <string name="thailand_channel" translatable="false">770d932e-0d04-45b1-855a-94bf38aae2b0</string>
+    <string name="india_channel" translatable="false">80ff18dd-b0b0-4fb7-bc5e-d60b285f98c8</string>
+
+</resources>
