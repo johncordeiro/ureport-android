@@ -30,11 +30,11 @@ public class SendGcmChatTask extends AsyncTask<ChatMessage, Void, Void> {
     @Override
     protected Void doInBackground(ChatMessage... params) {
         try {
-            ChatMessage chatMessage = params[0];
+            /*ChatMessage chatMessage = params[0];
             chatMessage.setUser(user);
 
             GcmServices gcmServices = new GcmServices(context);
-            gcmServices.sendChatMessage(chatRoom, chatMessage);
+            gcmServices.sendChatMessage(chatRoom, chatMessage);*/
         } catch(Exception exception) {
             Log.e(TAG, "doInBackground ", exception);
         }

@@ -26,10 +26,10 @@ public class SendGcmContributionTask extends AsyncTask<Contribution, Void, Void>
     @Override
     protected Void doInBackground(Contribution... params) {
         try {
-            Contribution contribution = params[0];
+            /*Contribution contribution = params[0];
 
             GcmServices gcmServices = new GcmServices(context);
-            gcmServices.sendContribution(story, contribution);
+            gcmServices.sendContribution(story, contribution);*/
         } catch(Exception exception) {
             Log.e(TAG, "doInBackground ", exception);
         }
