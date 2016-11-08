@@ -66,7 +66,7 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
 
     private void sendChatMessageNotification(Bundle data) {
         try {
-            ChatRoom chatRoom = getObject(data, EXTRA_CHAT_ROOM, IndividualChatRoom.class);
+            ChatRoom chatRoom = getObject(data, EXTRA_CHAT_ROOM, ChatRoom.class);
             ChatMessage chatMessage = getObject(data, EXTRA_CHAT_MESSAGE, ChatMessage.class);
 
             if(isUserAllowedForMessageNotification(chatMessage.getUser())) {
