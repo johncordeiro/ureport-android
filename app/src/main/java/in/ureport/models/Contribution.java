@@ -2,6 +2,7 @@ package in.ureport.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
@@ -14,13 +15,13 @@ public class Contribution {
     @Expose
     private String key;
 
-    @Expose
+    @SerializedName("message")
     private String content;
 
-    @Expose
+    @SerializedName("user")
     private User author;
 
-    private Date createdDate;
+    private Date date;
 
     public Contribution() {
     }
@@ -55,11 +56,11 @@ public class Contribution {
     }
 
     public Date getCreatedDate() {
-        return createdDate;
+        return date;
     }
 
     public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+        this.date = createdDate;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class Contribution {
                 "key='" + key + '\'' +
                 ", content='" + content + '\'' +
                 ", author=" + author +
-                ", createdDate=" + createdDate +
+                ", date=" + date +
                 '}';
     }
 
