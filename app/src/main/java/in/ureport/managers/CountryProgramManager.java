@@ -1,7 +1,10 @@
 package in.ureport.managers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
+
+import com.firebase.client.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +12,11 @@ import java.util.List;
 import br.com.ilhasoft.support.tool.ResourceUtil;
 import br.com.ilhasoft.support.tool.StatusBarDesigner;
 import in.ureport.R;
+import in.ureport.helpers.ValueEventListenerAdapter;
 import in.ureport.models.CountryProgram;
+import in.ureport.models.User;
 import in.ureport.models.rapidpro.AgeGroup;
+import in.ureport.network.UserServices;
 
 import static in.ureport.R.string.brasil_channel;
 import static in.ureport.R.string.chile_channel;
@@ -104,6 +110,19 @@ public class CountryProgramManager {
         indexOfCountryProgram = indexOfCountryProgram > 0 ? indexOfCountryProgram : 0;
 
         return getAvailableCountryPrograms().get(indexOfCountryProgram);
+    }
+
+    public static void registerToChannel(Context context) {
+        UserServices userServices = new UserServices();
+        userServices.getUser(UserManager.getUserId(), new ValueEventListenerAdapter() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                super.onDataChange(dataSnapshot);
+                User user = dataSnapshot.getValue(User.class);
+                GcmTopicManager gcmTopicManager = new GcmTopicManager(context);
+                gcmTopicManager.registerToChannelTopic(user, countryProgram);
+            }
+        });
     }
 
     public static List<CountryProgram> getAvailableCountryPrograms() {

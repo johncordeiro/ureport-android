@@ -9,6 +9,7 @@ import com.google.android.gms.gcm.GcmPubSub;
 
 import java.util.Set;
 
+import in.ureport.models.CountryProgram;
 import in.ureport.models.Story;
 import in.ureport.models.User;
 
@@ -21,6 +22,7 @@ public class GcmTopicManager {
 
     public static final String CHAT_TOPICS_PATH = "/topics/chats-";
     public static final String STORY_TOPICS_PATH = "/topics/story-";
+    public static final String COUNTRY_TOPICS_PATH = "/topics/countryProgram-";
 
     private Context context;
 
@@ -86,6 +88,23 @@ public class GcmTopicManager {
                     }
                 } catch (Exception exception) {
                     Log.e(TAG, "unregisterToChatRoomTopic ", exception);
+                }
+                return null;
+            }
+        }.execute();
+    }
+
+    public void registerToChannelTopic(final User user, final CountryProgram countryProgram) {
+        new AsyncTask<Void,Void,Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    if(user.getPushIdentity() != null) {
+                        GcmPubSub gcmPubStub = GcmPubSub.getInstance(context);
+                        gcmPubStub.subscribe(user.getPushIdentity(), getTopicName(COUNTRY_TOPICS_PATH, "-" + countryProgram.getCode()), null);
+                    }
+                } catch(Exception exception) {
+                    Log.e(TAG, "registerToChannelTopic ", exception);
                 }
                 return null;
             }

@@ -169,6 +169,7 @@ public abstract class BaseActivity extends AppCompatActivity implements LoaderMa
                     updateUserInfo(user);
                     user = refreshUserCountry(user);
                     setUser(user);
+                    CountryProgramManager.registerToChannel(getApplicationContext());
                 }
 
                 @Override
@@ -368,6 +369,7 @@ public abstract class BaseActivity extends AppCompatActivity implements LoaderMa
 
                 CountryProgram countryProgram = (CountryProgram) adapterView.getAdapter().getItem(position);
                 CountryProgramManager.switchCountryProgram(countryProgram);
+                CountryProgramManager.registerToChannel(getApplicationContext());
                 restartActivity();
             }
         }
