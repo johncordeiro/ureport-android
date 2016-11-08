@@ -18,6 +18,7 @@ import in.ureport.activities.MainActivity;
 import in.ureport.models.Contribution;
 import in.ureport.models.Story;
 import in.ureport.models.db.ChatNotification;
+import in.ureport.models.db.StoryNotification;
 
 /**
  * Created by johncordeiro on 21/08/15.
@@ -36,7 +37,8 @@ public class LocalNotificationManager {
         Chat(100, "ChatGroup"),
         StoryStatus(101, "StoryStatus"),
         Contribution(102),
-        Message(103);
+        Message(103),
+        Story(104);
 
         public int id;
         public String group;
@@ -109,6 +111,29 @@ public class LocalNotificationManager {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(MainActivity.EXTRA_STORY, story);
         return PendingIntent.getActivity(context, MainActivity.REQUEST_CODE_CONTRIBUTION_NOTIFICATION
+                , intent, PendingIntent.FLAG_CANCEL_CURRENT);
+    }
+
+    public void sendStoryNotification(StoryNotification storyNotification, Story story) {
+        Type type = Type.Story;
+
+        String title = context.getString(R.string.ureport_story_notification_title);
+        String content = storyNotification.getNickname() + ": " + storyNotification.getMessage();
+
+        NotificationCompat.Builder notificationBuilder = getDefaultNotificationBuilder(title
+                , content, getStoryIntent(story));
+        notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(content));
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.notify(type.id, notificationBuilder.build());
+    }
+
+    private PendingIntent getStoryIntent(Story story) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setAction(MainActivity.ACTION_STORY_NOTIFICATION);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(MainActivity.EXTRA_STORY, story);
+        return PendingIntent.getActivity(context, MainActivity.REQUEST_CODE_STORY_NOTIFICATION
                 , intent, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 

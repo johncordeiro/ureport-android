@@ -18,6 +18,7 @@ import in.ureport.network.GcmServices;
 import in.ureport.tasks.ChatNotificationTask;
 import in.ureport.tasks.ContributionNotificationTask;
 import in.ureport.tasks.MessageNotificationTask;
+import in.ureport.tasks.StoryNotificationTask;
 
 /**
  * Created by johncordeiro on 21/08/15.
@@ -40,7 +41,8 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
     public enum Type {
         Rapidpro,
         Chat,
-        Contribution
+        Contribution,
+        Story
     }
 
     @Override
@@ -51,6 +53,8 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
             sendChatMessageNotification(data);
         } else if(from.startsWith(GcmTopicManager.STORY_TOPICS_PATH) || hasType(data, Type.Contribution)) {
             sendContributionNotification(data);
+        } else if(hasType(data, Type.Story)) {
+            sendStoryNotification(data);
         } else {
             handleNotificationType(data);
         }
@@ -86,6 +90,19 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
             }
         } catch(Exception exception) {
             Log.e(TAG, "sendContributionNotification ", exception);
+        }
+    }
+
+    private void sendStoryNotification(Bundle data) {
+        try {
+            Story story = getObject(data, EXTRA_STORY, Story.class);
+
+            if(isUserAllowedForMessageNotification(story.getUserObject())) {
+                StoryNotificationTask storyNotificationTask = new StoryNotificationTask(this, story);
+                storyNotificationTask.execute(story);
+            }
+        } catch(Exception exception) {
+            Log.e(TAG, "sendStoryNotification ", exception);
         }
     }
 

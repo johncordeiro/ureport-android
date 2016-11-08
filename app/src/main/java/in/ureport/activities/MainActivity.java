@@ -52,10 +52,12 @@ public class MainActivity extends BaseActivity implements OnSeeOpenGroupsListene
     public static final int REQUEST_CODE_CHAT_NOTIFICATION = 300;
     public static final int REQUEST_CODE_MESSAGE_NOTIFICATION = 400;
     public static final int REQUEST_CODE_CONTRIBUTION_NOTIFICATION = 500;
+    public static final int REQUEST_CODE_STORY_NOTIFICATION = 700;
 
     private static final int POSITION_POLLS_FRAGMENT = 1;
     private static final int POSITION_CHAT_FRAGMENT = 2;
 
+    public static final String ACTION_STORY_NOTIFICATION = "in.ureport.StoryNotification";
     public static final String ACTION_CONTRIBUTION_NOTIFICATION = "in.ureport.ContributionNotification";
     public static final String ACTION_OPEN_CHAT_NOTIFICATION = "in.ureport.ChatNotification";
     public static final String ACTION_OPEN_MESSAGE_NOTIFICATION = "in.ureport.MessageNotification";
@@ -238,6 +240,10 @@ public class MainActivity extends BaseActivity implements OnSeeOpenGroupsListene
                 break;
             case ACTION_CONTRIBUTION_NOTIFICATION:
                 story = getIntent().getParcelableExtra(EXTRA_STORY);
+                break;
+            case ACTION_STORY_NOTIFICATION:
+                story = getIntent().getParcelableExtra(EXTRA_STORY);
+                break;
         }
     }
 
@@ -342,7 +348,7 @@ public class MainActivity extends BaseActivity implements OnSeeOpenGroupsListene
                 boolean needsChatCreation = !chatRoomFound && roomMembersLoaded >= chatRoomsSnapshot.getChildrenCount();
 
                 if(chatMembers.getUsers().size() == 2
-                && chatMembers.getUsers().contains(user)) {
+                        && chatMembers.getUsers().contains(user)) {
                     chatRoomFound = true;
                     chatsFragment.startChatRoom(new ChatRoom(chatRoom.getKey()));
                 } else if(needsChatCreation) {

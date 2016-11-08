@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
@@ -23,10 +24,12 @@ public class Story implements Parcelable {
 
     private String content;
 
-    private Date createdDate;
+    private Date date;
 
+    @SerializedName("userKey")
     private String user;
 
+    @SerializedName("user")
     private User userObject;
 
     private Integer contributions;
@@ -68,11 +71,11 @@ public class Story implements Parcelable {
     }
 
     public Date getCreatedDate() {
-        return createdDate;
+        return date;
     }
 
     public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+        this.date = createdDate;
     }
 
     public String getUser() {
@@ -141,7 +144,7 @@ public class Story implements Parcelable {
         dest.writeString(this.key);
         dest.writeString(this.title);
         dest.writeString(this.content);
-        dest.writeLong(createdDate != null ? createdDate.getTime() : -1);
+        dest.writeLong(date != null ? date.getTime() : -1);
         dest.writeString(this.user);
         dest.writeParcelable(this.userObject, 0);
         dest.writeValue(this.contributions);
@@ -156,7 +159,7 @@ public class Story implements Parcelable {
         this.title = in.readString();
         this.content = in.readString();
         long tmpCreatedDate = in.readLong();
-        this.createdDate = tmpCreatedDate == -1 ? null : new Date(tmpCreatedDate);
+        this.date = tmpCreatedDate == -1 ? null : new Date(tmpCreatedDate);
         this.user = in.readString();
         this.userObject = in.readParcelable(User.class.getClassLoader());
         this.contributions = (Integer) in.readValue(Integer.class.getClassLoader());
